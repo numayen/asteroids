@@ -45,15 +45,20 @@ def main():
                 print("Game over!")
                 return
         
+        #impact on asteroid colliding bullet; kill/split can only happen after the loops,
+        #because pygame sprite.Groups cannot be modified while being iterated on and are not iterable themselves
         asteroids_hit = []
+        shots_hit = []
         for asteroid in asteroids:
             for shot in shots:
-                if shot.collision(asteroid): #impact on asteroid colliding bullet
-                    shot.kill()
+                if shot.collision(asteroid):
+                    shots_hit.append(shot.kill)
                     asteroids_hit.append(asteroid)
 
         for asteroid in asteroids_hit:
             asteroid.split()
+        for shot in shots_hit:
+            shot.kill()
         # state calculation ends here
         ##################################################################
 
