@@ -21,7 +21,7 @@ def main():
     Player.containers = (updatable, drawable) #player is always updatable and drawable
     Asteroid.containers = (asteroids, updatable, drawable) #asteroids are always updatable and drawable
     AsteroidField.containers = (updatable) #asteroid field is not drawable and no asteroid object
-    Shot.containers = (updatable, drawable)
+    Shot.containers = (shots, updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) #in the middle of screen
     asteroid_field = AsteroidField() #the asteroid field
     # INITIALIZE ends here
@@ -41,9 +41,13 @@ def main():
         #################################################################
         updatable.update(dt) #move according to player input
         for asteroid in asteroids:
-            if player.collision(asteroid):
+            if player.collision(asteroid): #quit on player colliding asteroid
                 print("Game over!")
                 return
+            for shot in shots:
+                if shot.collision(asteroid): #impact on asteroid colliding bullet
+                    shot.kill()
+                    asteroid.split()
         # state calculation ends here
         ##################################################################
 

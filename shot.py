@@ -4,7 +4,7 @@ from circleshape import CircleShape
 from constants import *
 # IMPORT END #############################################
 
-# class for Shots; same as asteroid but radius is static
+# class for Shots
 class Shot(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, SHOT_RADIUS)
@@ -17,3 +17,7 @@ class Shot(CircleShape):
     # move the asteroid in a straight line with constant speed
     def update(self, dt):
         self.position += self.velocity * dt
+
+
+        
+        
