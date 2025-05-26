@@ -2,6 +2,8 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 # IMPORT ends here #############################################
 
 def main():
@@ -13,8 +15,12 @@ def main():
     dt = 0 # delta time from clock
     updatable = pygame.sprite.Group() #group of updatable objects
     drawable = pygame.sprite.Group() #group of drawable objects
-    Player.containers = (updatable, drawable) #container for all players
+    asteroids = pygame.sprite.Group() #group of all asteroids
+    Player.containers = (updatable, drawable) #player is always updatable and drawable
+    Asteroid.containers = (asteroids, updatable, drawable) #asteroids are always updatable and drawable
+    AsteroidField.containers = (updatable) #asteroid field is not drawable and no asteroid object
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) #in the middle of screen
+    asteroid_field = AsteroidField() #the asteroid field
     # INITIALIZE ends here
     ########################################################################
 
@@ -28,9 +34,13 @@ def main():
             if event.type == pygame.QUIT:
                 return
         
-        # calculate state according to player input
+        # calculate state
         #################################################################
-        updatable.update(dt)
+        updatable.update(dt) #move according to player input
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("Game over!")
+                return
         # state calculation ends here
         ##################################################################
 

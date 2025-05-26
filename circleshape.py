@@ -1,6 +1,6 @@
 import pygame
 
-# class given by boot.dev
+# class mostly given by boot.dev; added collision method later
 class CircleShape(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
         # we will be using this later
@@ -20,3 +20,8 @@ class CircleShape(pygame.sprite.Sprite):
     def update(self, dt):
         # sub-classes must override
         pass
+    
+    # check for collision with another circle
+    def collision(self, other_circle):
+        distance = self.position.distance_to(other_circle.position)
+        return distance < (self.radius + other_circle.radius)
