@@ -44,10 +44,16 @@ def main():
             if player.collision(asteroid): #quit on player colliding asteroid
                 print("Game over!")
                 return
+        
+        asteroids_hit = []
+        for asteroid in asteroids:
             for shot in shots:
                 if shot.collision(asteroid): #impact on asteroid colliding bullet
                     shot.kill()
-                    asteroid.split()
+                    asteroids_hit.append(asteroid)
+
+        for asteroid in asteroids_hit:
+            asteroid.split()
         # state calculation ends here
         ##################################################################
 
